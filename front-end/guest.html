@@ -3,7 +3,7 @@
 <head>
 
 	<meta charset="utf-8">
-	<title>ArientoSend : Client</title>
+	<title>ArientoSend : Guest</title>
 
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,25 +62,27 @@ http://www.tooplate.com/view/2077-modern-town
 			<img src="images/bluewhite_logo_full_w_tag.png" id = "logo" style="width:450px;height:110px;">
 		</a>
 		<div class="row">
+			<!-- 
 			<ul class="nav nav-tabs" id = "tabs">
 			  <li class="active"><a data-toggle="tab" href="#send">Send</a></li>
 			  <li><a data-toggle="tab" href="#inbox">Inbox</a></li>
 			  <li><a data-toggle="tab" href="#outbox">Outbox</a></li>
 			</ul>
+
 			<div class="tab-content">
 			  <div id="send" class="tab-pane fade in active">
 			     <form method="post" action="" enctype="multipart/form-data" >
 
-					<p class="text-primary">Send to: </p> 
-					<input type="text" name="email" placeholder="Enter recipient email"> 
+					<p class="text-primary">Send To: </p> 
+					<input type="text" name="email" placeholder="Enter email"> 
 					<br>
-					<p class="text-primary">Password to retrieve file:</p>
-					<input type="password" name="password" placeholder="Enter password"> 
+					<p class="text-primary">Password to Retrieve file:</p>
+					<input type="password" name="password"> 
 					<br>
 					<p class="text-primary">Message:</p> 
-					<br> <textarea rows = "4" cols = "50" name="message" placeholder="Enter a message (optional)" ></textarea> 
+					<br> <textarea rows = "4" cols = "50" name="message" >Enter a message(optional)</textarea> 
 					<br>
-					<p class="text-primary">Attach file(s):</p>
+					<p class="text-primary">Attach File(s):</p>
 					<input type="file" name="attachedFiles[]" id="attachedFiles" allow="text/*" multiple>
 				</form> 
 				<input type = "submit" class="btn btn-danger" id = "sendFiles" value = "Send Files">
@@ -92,6 +94,26 @@ http://www.tooplate.com/view/2077-modern-town
 			   
 			  </div>
 			</div>
+			-->
+			<div id="send" class="tab-pane fade in active">
+			     <form method="post" action="" enctype="multipart/form-data" >
+
+					<p class="text-primary">Name: </p> 
+					<input type="text" name="name" placeholder="Enter your full name"> 
+					<br>
+					<p class="text-primary">Your email: </p> 
+					<input type="text" name="guestEmail" placeholder="Enter your email"> 
+					<br>
+					<p class="text-primary">Send to: </p> 
+					<input type="text" name="email" placeholder="Enter recipient email"> 
+					<br>
+					<p class="text-primary">Message:</p> 
+					<br> <textarea rows = "4" cols = "50" name="message" placeholder="Enter a message (optional)" ></textarea> 
+					<br>
+					<p class="text-primary">Attach File(s):</p>
+					<input type="file" name="attachedFiles[]" id="attachedFiles" allow="text/*" multiple>
+				</form> 
+				<input type = "submit" class="btn btn-danger" id = "sendFiles" value = "Send Files">
 		</div>
 	</div>
 </section>
