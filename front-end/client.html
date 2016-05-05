@@ -9,14 +9,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="">
 	<meta name="description" content="">
-<!--
-
-Template 2077 Modern Town
-
-http://www.tooplate.com/view/2077-modern-town
-
--->
-	
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/animate.min.css">
@@ -24,35 +16,11 @@ http://www.tooplate.com/view/2077-modern-town
    	<link rel="stylesheet" href="css/owl.theme.css">
 	<link rel="stylesheet" href="css/owl.carousel.css">
 	<link rel="stylesheet" href="css/style.css">
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-	
-	<style>
-		#logo {
-			position: absolute;
-			top: 10px;
-			left: 450px;
-		}
-		#tabs {
-			position:absolute ;
-			bottom: 830px;
-			left: 80px;
-		}
-		#send{
-			position: absolute;
-			text-align: left;
-			top: 180px;
-			left: 100px;
-		}
-		#send p {
-			display: inline;
-		}
-		textarea {
-		   resize: none;
-		}
-		
-	</style>
-</head>
-<body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+ 
+	  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+ 
+	<body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
 
 <!-- Home section
@@ -60,19 +28,17 @@ http://www.tooplate.com/view/2077-modern-town
 
 <section id="home" class="parallax-section homediv">
 
-	<div class="container" id = "menu" >
-		<a href="index.html">
+	<a href="index.html">
 			<img src="images/bluewhite_logo_full_w_tag.png" id = "logo" style="width:450px;height:110px;">
 		</a>
-		<div class="row">
-			<ul class="nav nav-tabs" id = "tabs">
-			  <li class="active"><a data-toggle="tab" href="#send">Send</a></li>
-			  <li><a data-toggle="tab" href="#inbox">Inbox</a></li>
-			  <li><a data-toggle="tab" href="#outbox">Outbox</a></li>
-			</ul>
-			<div class="tab-content">
-			  <div id="send" class="tab-pane fade in active">
-			     <form method="post" action="" enctype="multipart/form-data" >
+	<div id="tabs">
+  <ul>
+    <li><a href="#fragment-1"><span>Send</span></a></li>
+    <li><a href="#fragment-2"><span>Inbox</span></a></li>
+    <li><a href="#fragment-3"><span>Outbox</span></a></li>
+  </ul>
+  <div id="fragment-1">
+	  <form method="post" action="" enctype="multipart/form-data" >
 
 					<p class="text-primary">Send to: </p> 
 					<input type="text" name="email" placeholder="Enter recipient email"> 
@@ -85,18 +51,24 @@ http://www.tooplate.com/view/2077-modern-town
 					<br>
 					<p class="text-primary">Attach file(s):</p>
 					<input type="file" name="attachedFiles[]" id="attachedFiles" allow="text/*" multiple>
-				</form> 
 				<input type = "submit" class="btn btn-danger" id = "sendFiles" value = "Send Files">
-			  </div>
-			  <div id="inbox" class="tab-pane fade">
-			   
-			  </div>
-			  <div id="outbox" class="tab-pane fade">
-			   
-			  </div>
-			</div>
-		</div>
-	</div>
+				</form> 
+
+  </div>
+  <div id="fragment-2">
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+  </div>
+  <div id="fragment-3">
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+  </div>
+</div>
+
+<script>
+$( "#tabs" ).tabs();
+</script>
 </section>
 
 <!-- Footer section
