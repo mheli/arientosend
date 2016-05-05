@@ -21,7 +21,8 @@ from send import views
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^', views.index),
-    url(r'^client\.html', views.client),
-    url(r'^guest\.html', views.guest),
-    url(r'^login\.html', views.login),
+    url(r'^index', views.index),
+    url(r'^client', views.client),
+    url(r'^guest', views.guest),
+    url(r'^login', views.login),
 ]
