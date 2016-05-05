@@ -20,9 +20,9 @@ from send import views
 # would be nice to not use .\html, looks bad.
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
-    url(r'^', views.index),
     url(r'^index', views.index),
     url(r'^client', views.client),
     url(r'^guest', views.guest),
     url(r'^login', views.login),
+    url(r'^', views.index),
 ]
