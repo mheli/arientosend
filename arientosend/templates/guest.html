@@ -76,7 +76,7 @@ http://www.tooplate.com/view/2077-modern-town
 			</div>
 			-->
 			<div id="send" class="tab-pane fade in active">
-			     <form method="post" action="" enctype="multipart/form-data" >
+			     <form method="post" action="" enctype="multipart/form-data" >{% csrf_token %}
 
 					<p class="text-primary">Name: </p> 
 					<input type="text" name="name" placeholder="Full name"> 

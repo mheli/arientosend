@@ -39,7 +39,7 @@
     <li><a href="#fragment-3"><span>Outbox</span></a></li>
   </ul>
   <div id="fragment-1">
-	  <form method="post" action="" enctype="multipart/form-data" >
+	  <form method="post" action="" enctype="multipart/form-data" >{% csrf_token %}
 
 					<p class="text-primary">Send to: </p> 
 					<input type="text" name="email" placeholder="Enter recipient email"> 
