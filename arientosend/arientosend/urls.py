@@ -22,7 +22,9 @@ urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^index', views.index),
     url(r'^client', views.client),
+    url(r'^download/(?P<key>\w+)/$', views.download),
+    url(r'^download/(?P<key>\w+)/retrieve$', views.retrieve),
     url(r'^guest', views.guest),
     url(r'^login', views.login),
-    url(r'^', views.index),
+    url(r'^$', views.index),
 ]

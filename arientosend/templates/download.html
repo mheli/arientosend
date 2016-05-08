@@ -1,0 +1,121 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>ArientoSend : Login</title>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+<!--
+Template 2077 Modern Town
+http://www.tooplate.com/view/2077-modern-town
+-->
+	
+	<link rel="shortcut icon" type="image/x-icon" href="{% static "favicon.ico"%}"/>
+	<link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}">
+	<link rel="stylesheet" href="{% static "css/animate.min.css"%}">
+	<link rel="stylesheet" href="{% static "css/font-awesome.min.css"%}">
+   	<link rel="stylesheet" href="{% static "css/owl.theme.css"%}">
+	<link rel="stylesheet" href="{% static "css/owl.carousel.css"%}">
+	<link rel="stylesheet" href="{% static "css/style.css"%}">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+</head>
+<body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+
+<!-- Home section
+================================================== -->
+
+<section id="home" class="parallax-section homediv">
+
+	<div class="container" >
+		<a href="index">
+			<img src="{% static "images/bluewhite_logo_full_w_tag.png"%}" id = "logo" style="width:450px;height:110px;">
+		</a>
+		<div class="row">
+
+			<divclass="col-md-12 col-sm-12">
+				<div class="login">
+					<font color ="4682b4">
+				     	<h1 id="login">Download</h1>
+				 	</font>
+				      <form method="post" action="retrieve" target="_blank"> {% csrf_token %}
+				        <p><input type="password" name="password" value="" placeholder="File Password" size="50" required> </p>
+				        <p><input type="submit" class="btn btn-danger" id="verify" value="Download"></p>
+				      </form>
+			    </div>
+			</div>
+
+		</div>
+	</div>		
+</section>
+
+<!-- Footer section
+================================================== -->
+<footer>
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-md-6 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+				<h2>ArientoSend</h2>
+				<p>ArientoSend is a collaborative project done as a part of requirement for CS130: Software Engineering at UCLA in Spring of 2016.</p>
+				<p>Licensed under GNU General Public License v3.0</p>
+			</div>
+			<!-- <div class="link-list col-md-2 col-sm-2 wow fadeInUp" data-wow-delay="0.6s">
+				<h2>Company</h2>
+				<a href="#">About</a>
+                <a href="#">Blog</a>
+				<a href="#">Team</a>
+				<a href="#">Career</a>
+			</div>
+			<div class="link-list col-md-2 col-sm-2 wow fadeInUp" data-wow-delay="0.6s">
+				<h2>Support</h2>
+				<a href="#">Email Us</a>
+				<a href="#">FAQs</a>
+				<a href="#">Service Terms</a>
+				<a href="#">Licenses</a>
+			</div> -->
+			<div class="col-md-6 col-sm-6 wow fadeInUp" data-wow-delay="0.6s">
+				<h2>Find us on Github</h2>
+				<ul class="social-icon">
+					<li><a target="_blank" href="https://github.com/michellekli/arientosend" class="fa fa-github wow fadeIn" data-wow-delay="0.3s"></a></li>
+				</ul>
+			<div>
+
+		</div>
+	</div>
+
+	<div class="col-md-12 col-sm-12">
+		<div class="copyright-text wow bounceIn">
+			
+		</div>
+	</div>
+
+</footer>
+	
+	
+
+
+<!-- Javascript 
+================================================== -->
+<script src="{% static "js/jquery.js"%}"></script>
+<script src="{% static "js/bootstrap.min.js"%}"></script>
+<script src="{% static "js/smoothscroll.js"%}"></script>
+<script src="{% static "js/jquery.nav.js"%}"></script>
+<script src="{% static "js/jquery.parallax.js"%}"></script>
+<script src="{% static "js/owl.carousel.min.js"%}"></script>
+<script src="{% static "js/isotope.min.js"%}"></script>
+<script src="{% static "js/wow.min.js"%}"></script>
+<script src="{% static "js/counter.js"%}"></script>
+<script src="{% static "js/custom.js"%}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</body>
+</html>
