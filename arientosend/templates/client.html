@@ -57,13 +57,27 @@
 
   </div>
   <div id="fragment-2">
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+	{% if inbox_list %}
+		<ul>
+		{% for file in inbox_list %}
+			<li>{{ file.file_from_email }} {{ file.file_sent_date }}</li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>There are no files in your inbox.</p>
+	{% endif %}
+
   </div>
   <div id="fragment-3">
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+	{% if outbox_list %}
+		<ul>
+		{% for file in outbox_list %}
+			<li>{{ file.file_sent_date }}</li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>There are no files in your outbox.</p>
+	{% endif %}
   </div>
 </div>
 

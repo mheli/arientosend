@@ -10,13 +10,16 @@ class User(models.Model):
 
     def __str__(self):
         return self.email
-        
+
 # File storage model
 # File uploads help:
 # https://docs.djangoproject.com/en/1.9/topics/http/file-uploads/
 class File(models.Model):
     key = models.CharField(max_length=100, primary_key=True)
     file = models.FileField()
+
+    def __str__(self):
+        return self.key
 
 # File Access Model, defines access method and who has permission to view file
 class FileAccess(models.Model):
@@ -37,3 +40,7 @@ class FileAccess(models.Model):
         # update timestamps
         self.file_sent_date = timezone.now()
         self.file_expiration_date = timezone.now()+timezone.timedelta(days=3)
+        super(FileAccess, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.file_from_email
