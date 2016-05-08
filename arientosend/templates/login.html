@@ -45,8 +45,8 @@ http://www.tooplate.com/view/2077-modern-town
 				     	<h1 id="login">Login</h1>
 				 	</font>
 				      <form method="post" action="client"> {% csrf_token %}
-				        <p><input type="text" name="login" value="" placeholder="Username" size="30"> </p>
-				        <p><input type="password" name="password" value="" placeholder="SafeNet Pin" size="30"> </p>
+				        <p><input type="email" name="login" value="" placeholder="Username" size="30" required> </p>
+				        <p><input type="password" name="password" value="" placeholder="SafeNet Pin" size="30" required> </p>
 				        <p><input type="submit" class="btn btn-danger" id="verify" value="Verify"></p>
 				      </form>
 			    </div>

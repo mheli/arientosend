@@ -8,6 +8,9 @@ class User(models.Model):
     email = models.CharField(max_length=30, unique=True)
     safenet_user = models.CharField(max_length=30, unique=True)
 
+    def __str__(self):
+        return self.email
+        
 # File storage model
 # File uploads help:
 # https://docs.djangoproject.com/en/1.9/topics/http/file-uploads/
