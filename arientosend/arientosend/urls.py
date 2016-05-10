@@ -18,13 +18,17 @@ from django.conf.urls import include, url
 from send import views
 
 # would be nice to not use .\html, looks bad.
+# don't rearrange the order of the links
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^index', views.index),
+    url(r'^client-send', views.client_send),
     url(r'^client', views.client),
     url(r'^download/(?P<key>\w+)/$', views.download),
     url(r'^download/(?P<key>\w+)/retrieve$', views.retrieve),
+    url(r'^guest-send', views.guest_send),
     url(r'^guest', views.guest),
     url(r'^login', views.login),
+    url(r'^user-download', views.user_download),
     url(r'^$', views.index),
 ]

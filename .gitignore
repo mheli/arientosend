@@ -1,2 +1,3 @@
 *.py[cod]
 arientosend/arientosend/settings.py
+arientosend/send/migrations

@@ -15,11 +15,10 @@ class User(models.Model):
 # File uploads help:
 # https://docs.djangoproject.com/en/1.9/topics/http/file-uploads/
 class File(models.Model):
-    key = models.CharField(max_length=100, primary_key=True)
-    file = models.FileField()
+    file = models.FileField(upload_to='')
 
     def __str__(self):
-        return self.key
+        return self.id
 
 # File Access Model, defines access method and who has permission to view file
 class FileAccess(models.Model):
@@ -27,13 +26,20 @@ class FileAccess(models.Model):
         ('P', 'Password'),
         ('U', 'User'),
     )
-    file = models.ForeignKey(File, on_delete=models.CASCADE)
     access_type = models.CharField(max_length=1, choices=ACCESS_TYPE)
-    ariento_user = models.ForeignKey(User)
+    # ariento_user is used only if access_type is 'U'
+    # django doesn't support on_update
+    ariento_user = models.ForeignKey(User, blank=True, null=True)
+    # password is used only if access_type is 'P'
     password = models.CharField(max_length=30)
-    file_from_email = models.CharField(max_length=30)
+
+    file = models.ForeignKey(File, on_delete=models.CASCADE)
+    recipient_email = models.CharField(max_length=30)
+    sender_email = models.CharField(max_length=30)
     file_sent_date = models.DateTimeField(editable=False)
     file_expiration_date = models.DateTimeField()
+    download_limit = models.PositiveIntegerField(default=10)
+    download_count = models.PositiveIntegerField(default=0)
 
     # call on model save
     def save(self, *args, **kwargs):
@@ -43,4 +49,4 @@ class FileAccess(models.Model):
         super(FileAccess, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.file_from_email
+        return self.recipient_email

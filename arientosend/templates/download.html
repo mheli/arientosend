@@ -23,7 +23,6 @@ http://www.tooplate.com/view/2077-modern-town
 	<link rel="stylesheet" href="{% static "css/owl.carousel.css"%}">
 	<link rel="stylesheet" href="{% static "css/style.css"%}">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-
 </head>
 <body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
@@ -34,7 +33,7 @@ http://www.tooplate.com/view/2077-modern-town
 <section id="home" class="parallax-section homediv">
 
 	<div class="container" >
-		<a href="index">
+		<a href="../../index">
 			<img src="{% static "images/bluewhite_logo_full_w_tag.png"%}" id = "logo" style="width:450px;height:110px;">
 		</a>
 		<div class="row">
@@ -44,7 +43,7 @@ http://www.tooplate.com/view/2077-modern-town
 					<font color ="4682b4">
 				     	<h1 id="login">Download</h1>
 				 	</font>
-				      <form method="post" action="retrieve" target="_blank"> {% csrf_token %}
+				      <form method="post" action="retrieve"> {% csrf_token %}
 				        <p><input type="password" name="password" value="" placeholder="File Password" size="50" required> </p>
 				        <p><input type="submit" class="btn btn-danger" id="verify" value="Download"></p>
 				      </form>

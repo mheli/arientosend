@@ -1,3 +1,4 @@
+{% load mathfilters %}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -39,28 +40,32 @@
     <li><a href="#fragment-3"><span>Outbox</span></a></li>
   </ul>
   <div id="fragment-1">
-	  <form method="post" action="" enctype="multipart/form-data" >{% csrf_token %}
-
-					<p class="text-primary">Send to: </p> 
-					<input type="text" name="email" placeholder="Enter recipient email"> 
-					<br>
-					<p class="text-primary">Password to retrieve file:</p>
-					<input type="password" name="password" placeholder="Enter password"> 
-					<br>
-					<p class="text-primary">Message:</p> 
-					<br> <textarea rows = "4" cols = "50" name="message" placeholder="Enter a message (optional)" ></textarea> 
-					<br>
-					<p class="text-primary">Attach file(s):</p>
-					<input type="file" name="attachedFiles[]" id="attachedFiles" allow="text/*" multiple>
-				<input type = "submit" class="btn btn-danger" id = "sendFiles" value = "Send Files">
-				</form> 
+	  <form method="post" action="client-send" enctype="multipart/form-data">{% csrf_token %}
+			<p class="text-primary">Send to: </p> 
+			<input type="email" name="email" placeholder="Enter recipient email" required> 
+			<br>
+			<p class="text-primary">Password to retrieve file:</p>
+			<input type="password" name="password" placeholder="Enter password" required> 
+			<br>
+			<p class="text-primary">Message:</p> 
+			<br> <textarea rows = "4" cols = "50" name="message" placeholder="Enter a message (optional)" ></textarea> 
+			<br>
+			<p class="text-primary">Attach file(s):</p>
+			<input type="file" name="attachments" id="attachedFiles" allow="text/*" required>
+			<input type = "submit" class="btn btn-danger" id = "sendFiles" value = "Send Files">
+		</form> 
 
   </div>
   <div id="fragment-2">
 	{% if inbox_list %}
 		<ul>
 		{% for file in inbox_list %}
-			<li>{{ file.file_from_email }} {{ file.file_sent_date }}</li>
+			<li>{{ file.file_sent_date }}: {{ file.download_limit|sub:file.download_count }} from {{ file.sender_email }} 
+				<form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
+					<input type="hidden" name="key" value="{{ file.file.id }}">
+					<input type="submit" class="btn btn-danger" value="Download">
+				</form>
+			</li>
 		{% endfor %}
 		</ul>
 	{% else %}
@@ -72,7 +77,12 @@
 	{% if outbox_list %}
 		<ul>
 		{% for file in outbox_list %}
-			<li>{{ file.file_sent_date }}</li>
+			<li>{{ file.file_sent_date }}: {{ file.download_limit|sub:file.download_count }} to {{ file.recipient_email }}
+				<form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
+					<input type="hidden" name="key" value="{{ file.file.id }}">
+					<input type="submit" class="btn btn-danger" value="Download">
+				</form>
+			</li>
 		{% endfor %}
 		</ul>
 	{% else %}
