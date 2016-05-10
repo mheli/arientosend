@@ -20,3 +20,7 @@ ssh-add ~/.ssh/github
 
 ##Restart nginx server:
 sudo service nginx restart
+
+### Current Ariento users in the database
+test@ariento.com
+other@ariento.com
