@@ -13,6 +13,9 @@ from .models import User, FileAccess
 from .models import File as ArientoFile
 
 import hashlib
+import mailer
+
+emailer = emailer()
 
 # Create your views here.
 def index(request):
@@ -63,6 +66,9 @@ def client_send(request):
 		fa.ariento_user = u
 	finally:
 		fa.save()
+        
+        emailer.sendmail(recipient, "Ariento File Send", message)
+        
 		context = {
 			'recipient': recipient,
 			'num_files': af.id,
@@ -153,6 +159,8 @@ def guest_send(request):
 		fa.recipient_email = recipient
 		fa.save()
 
+        emailer.sendmail(recipient, "Ariento File Send", message)
+        
 		context = {
 			'recipient': recipient,
 			'num_files': af.id,

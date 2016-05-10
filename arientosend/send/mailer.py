@@ -5,7 +5,7 @@ GOOGLE_PASSWORD = "passwordhere"
 
 class emailer:
     # maybe rewrite this class to have email connection persist throughout emails
-    def sendmail(content, subject, to_email):
+    def sendmail(to_email, subject, content):
 
         message = """\From: %s\nTo: %s\nSubject: %s\n\n%s
     """ % (GOOGLE_ACCOUNT, ", ".join(to_email), subject, content)
