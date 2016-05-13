@@ -31,8 +31,8 @@ def client(request):
 	email = request.POST['login']
 	# TODO: SafeNet authentication
 	password = request.POST['password']
-	
-	try:
+
+        try:
 		user = User.objects.get(email=email)
 	except ObjectDoesNotExist:
 		return render(request, 'index.html', {})
@@ -69,15 +69,16 @@ def client_send(request):
 		fa.access_type = 'P'
 		fa.salt = get_salt()
 		fa.hashed_password = hashed_password(password, fa.salt)
+                email_body = '''An Ariento client, %s, has sent you a file.\nClick here to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (fa.sender_email, str(af.id), message)
 	else:
 		fa.access_type = 'U'
 		fa.ariento_user = u
+                email_body = '''An Ariento client, %s, has sent you a file.\nLog in to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/login\nMessage:%s''' % (fa.sender_email, message)
 	finally:
 		fa.save()
-        
-                email_body = '''An ariento guest, %s, has sent you a file.\nClick here to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (str(af.id) , fa.sender_email, message)
+
                 emailer.sendmail(recipient, "Ariento File Send", email_body)
-        
+
 		context = {
 			'recipient': recipient,
 			'num_files': af.id,
@@ -168,9 +169,9 @@ def guest_send(request):
 		fa.recipient_email = recipient
 		fa.save()
 
-                email_body = '''An ariento guest, %s, has sent you a file.\nClick here to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (str(af.id) , sender, message)
+                email_body = '''An Ariento guest, %s, has sent you a file.\nClick here to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (sender, str(af.id), message)
                 emailer.sendmail(recipient, "Ariento File Send", email_body)
-        
+
 		context = {
 			'recipient': recipient,
 			'num_files': af.id,
