@@ -12,10 +12,16 @@ from wsgiref.util import FileWrapper
 from .models import User, FileAccess
 from .models import File as ArientoFile
 
-import hashlib
+import hashlib, uuid
 from .mailer import emailer
 
 emailer = emailer()
+
+def get_salt():
+	return uuid.uuid1().hex
+
+def hashed_password(password, salt):
+	return hashlib.sha512(password+salt).hexdigest()
 
 # Create your views here.
 def index(request):
@@ -23,6 +29,7 @@ def index(request):
 
 def client(request):
 	email = request.POST['login']
+	# TODO: SafeNet authentication
 	password = request.POST['password']
 	
 	try:
@@ -60,7 +67,8 @@ def client_send(request):
 		u = User.objects.get(email=recipient)
 	except ObjectDoesNotExist:
 		fa.access_type = 'P'
-		fa.password = password
+		fa.salt = get_salt()
+		fa.hashed_password = hashed_password(password, fa.salt)
 	else:
 		fa.access_type = 'U'
 		fa.ariento_user = u
@@ -116,7 +124,7 @@ def retrieve(request, key):
 				'not_found_type': 'does_not_exist',
 			}
 			return HttpResponse(template.render(context, request))
-		elif (access.password == password):
+		elif (access.hashed_password == hashed_password(password, access.salt)):
 			# increase download count
 			access.download_count = access.download_count + 1
 			access.save()

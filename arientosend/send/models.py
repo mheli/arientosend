@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 
+import uuid
+
 # User model for valid ariento users
 class User(models.Model):
     email = models.CharField(max_length=30, unique=True)
@@ -31,7 +33,8 @@ class FileAccess(models.Model):
     # django doesn't support on_update
     ariento_user = models.ForeignKey(User, blank=True, null=True)
     # password is used only if access_type is 'P'
-    password = models.CharField(max_length=30)
+    hashed_password = models.CharField(max_length=128, null=True, blank=True)
+    salt = models.CharField(max_length=32, null=True, blank=True)
 
     file = models.ForeignKey(File, on_delete=models.CASCADE)
     recipient_email = models.CharField(max_length=30)
