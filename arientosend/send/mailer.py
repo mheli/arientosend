@@ -1,7 +1,8 @@
 import smtplib
+from django.conf import settings
 
-GOOGLE_ACCOUNT = "noreply@arientosend.com"
-GOOGLE_PASSWORD = "passwordhere"
+GOOGLE_ACCOUNT = getattr(settings, "GOOGLE_ACCOUNT", None)
+GOOGLE_PASSWORD = getattr(settings, "GOOGLE_PASSWORD", None)
 
 class emailer:
     # maybe rewrite this class to have email connection persist throughout emails

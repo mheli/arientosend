@@ -67,7 +67,9 @@ def client_send(request):
 	finally:
 		fa.save()
         
-        emailer.sendmail(recipient, "Ariento File Send", message)
+        email_body = '''An ariento guest, %s, has sent you a file.\nClick here to download it:
+        http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (str(af.id) , fa.sender_email, message)
+        emailer.sendmail(recipient, "Ariento File Send", email_body)
         
 		context = {
 			'recipient': recipient,
@@ -159,7 +161,9 @@ def guest_send(request):
 		fa.recipient_email = recipient
 		fa.save()
 
-        emailer.sendmail(recipient, "Ariento File Send", message)
+        email_body = '''An ariento guest, %s, has sent you a file.\nClick here to download it:
+        http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (str(af.id) , sender, message)
+        emailer.sendmail(recipient, "Ariento File Send", email_body)
         
 		context = {
 			'recipient': recipient,
