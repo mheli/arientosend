@@ -18,7 +18,7 @@ killall -SIGINT uwsgi
 sudo python manage.py collectstatic
 
 ##Pushing to the git repo from the instance requires a key:
-eval `ssh-agent -s`  
+eval `` `ssh-agent -s` ``  
 ssh-add ~/.ssh/github
 
 ##Restart nginx server:
