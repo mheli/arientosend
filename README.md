@@ -14,8 +14,11 @@ killall -SIGINT uwsgi
 ###Start uwsgi in the background:
 ~/arientosend/arientosend/start_uwsgi.sh &
 
+##After adding static files (css, js) to static/ run the collectstatic command so that nginx can see them
+sudo python manage.py collectstatic
+
 ##Pushing to the git repo from the instance requires a key:
-eval `ssh-agent -s'  
+eval `` `ssh-agent -s` ``  
 ssh-add ~/.ssh/github
 
 ##Restart nginx server:
