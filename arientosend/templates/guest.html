@@ -26,7 +26,23 @@ http://www.tooplate.com/view/2077-modern-town
 	<link rel="stylesheet" href="{% static "css/owl.carousel.css"%}">
 	<link rel="stylesheet" href="{% static "css/style.css"%}">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-	
+
+    <style>
+        #menu {
+            width: 100%;
+            margin-top: 100px;
+        }
+        #send  {
+            display: table;
+            position: relative;
+            left: 20px;
+            top: 20px;
+            margin-bottom: 30px;
+        }
+        #send p {display:table-row;}
+        #send input {display:table-cell;}
+        #home {height:auto;}
+    </style>
 	
 </head>
 <body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
@@ -35,13 +51,13 @@ http://www.tooplate.com/view/2077-modern-town
 <!-- Home section
 ================================================== -->
 
-<section id="home" class="parallax-section homediv">
+<section id="home" class="parallax-section homediv" >
 
 	<div class="container" id = "menu" >
 		<a href="index">
 			<img src="{% static "images/bluewhite_logo_full_w_tag.png"%}" id = "logo" style="width:450px;height:110px;">
 		</a>
-		<div class="row">
+		<div class="row" >
 			<!-- 
 			<ul class="nav nav-tabs" id = "tabs">
 			  <li class="active"><a data-toggle="tab" href="#send">Send</a></li>
@@ -75,7 +91,7 @@ http://www.tooplate.com/view/2077-modern-town
 			  </div>
 			</div>
 			-->
-			<div id="send" class="tab-pane fade in active">
+			<div id="send"  class="tab-pane fade in active">
 			     <form method="post" action="guest-send" enctype="multipart/form-data" >{% csrf_token %}
 
 					<p class="text-primary">Name: </p> 
@@ -88,11 +104,12 @@ http://www.tooplate.com/view/2077-modern-town
 					<input type="email" name="email" placeholder="Recipient email" required> 
 					<br>
 					<p class="text-primary">Message:</p> 
-					<br> <textarea rows = "4" cols = "50" name="message" placeholder="Message (optional)" ></textarea> 
+					<textarea rows = "4" cols = "50" name="message" placeholder="Message (optional)" ></textarea> 
 					<br>
 					<p class="text-primary">Attach File:</p>
 					<input type="file" name="attachments" id="attachedFiles" allow="text/*" required>
-					<input type = "submit" class="btn btn-danger" id = "sendFiles" value = "Send Files">
+				    <br> 
+                    <input type = "submit" class="btn btn-danger" id = "sendFiles" value = "Send Files">
 				</form> 
 		</div>
 	</div>
