@@ -66,7 +66,7 @@
 			<li>{{ file.file_sent_date }}: {{ file.download_limit|sub:file.download_count }} from {{ file.sender_email }} 
 				<form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
 					<input type="hidden" name="key" value="{{ file.file.id }}">
-					<input type="submit" class="btn btn-danger" value="Download">
+					<input type="submit" class="btn-sm btn-danger" value="Download">
 				</form>
 			</li>
 		{% endfor %}
@@ -83,7 +83,7 @@
 			<li>{{ file.file_sent_date }}: {{ file.download_limit|sub:file.download_count }} to {{ file.recipient_email }}
 				<form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
 					<input type="hidden" name="key" value="{{ file.file.id }}">
-					<input type="submit" class="btn btn-danger" value="Download">
+					<input type="submit" class="btn-sm btn-danger" value="Download">
 				</form>
 			</li>
 		{% endfor %}
