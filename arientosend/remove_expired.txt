@@ -1,0 +1,2 @@
+# run hourly everyday
+0 * * * *      python /home/ec2-user/arientosend/arientosend/remove_expired.py

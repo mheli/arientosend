@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.files.storage import FileSystemStorage
 from django.core.files.storage import Storage
 from django.core.files import File
@@ -28,25 +28,31 @@ def index(request):
 	return render(request, 'index.html', {})
 
 def client(request):
-	email = request.POST['login']
-	# TODO: SafeNet authentication
-	password = request.POST['password']
-
-        try:
-		user = User.objects.get(email=email)
-	except ObjectDoesNotExist:
-		return render(request, 'index.html', {})
+	if 'authorized_user' in request.session:
+		email = request.session['authorized_user']
+		try:
+			user = User.objects.get(email=email)
+		except ObjectDoesNotExist:
+			return render(request, 'index.html', {})
 	else:
-		# assumes ariento user is set when an ariento user
-		# is receiving and when sending
-		inbox_list = FileAccess.objects.filter(recipient_email=user.email)
-		outbox_list = FileAccess.objects.filter(sender_email=user.email)
-		context = {
-			'inbox_list': inbox_list,
-			'outbox_list': outbox_list,
-		}
-		template = loader.get_template('client.html')
-		return HttpResponse(template.render(context, request))
+		email = request.POST['login']
+		# TODO: SafeNet authentication
+		password = request.POST['password']
+		try:
+			user = User.objects.get(email=email)
+		except ObjectDoesNotExist:
+			return render(request, 'index.html', {})
+		else:
+			request.session['authorized_user'] = email
+
+	inbox_list = FileAccess.objects.filter(recipient_email=user.email)
+	outbox_list = FileAccess.objects.filter(sender_email=user.email)
+	context = {
+		'inbox_list': inbox_list,
+		'outbox_list': outbox_list,
+	}
+	template = loader.get_template('client.html')
+	return HttpResponse(template.render(context, request))
 
 def client_send(request):
 	recipient = request.POST['email']
@@ -69,15 +75,15 @@ def client_send(request):
 		fa.access_type = 'P'
 		fa.salt = get_salt()
 		fa.hashed_password = hashed_password(password, fa.salt)
-                email_body = '''An Ariento client, %s, has sent you a file.\nClick here to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (fa.sender_email, str(af.id), message)
+		email_body = '''An Ariento client, %s, has sent you a file.\nClick here to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (fa.sender_email, str(af.id), message)
 	else:
 		fa.access_type = 'U'
 		fa.ariento_user = u
-                email_body = '''An Ariento client, %s, has sent you a file.\nLog in to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/login\nMessage:%s''' % (fa.sender_email, message)
+		email_body = '''An Ariento client, %s, has sent you a file.\nLog in to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/login\nMessage:%s''' % (fa.sender_email, message)
 	finally:
 		fa.save()
 
-                emailer.sendmail(recipient, "Ariento File Send", email_body)
+		emailer.sendmail(recipient, "Ariento File Send", email_body)
 
 		context = {
 			'recipient': recipient,
@@ -169,8 +175,8 @@ def guest_send(request):
 		fa.recipient_email = recipient
 		fa.save()
 
-                email_body = '''An Ariento guest, %s, has sent you a file.\nClick here to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (sender, str(af.id), message)
-                emailer.sendmail(recipient, "Ariento File Send", email_body)
+		email_body = '''An Ariento guest, %s, has sent you a file.\nClick here to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (sender, str(af.id), message)
+		emailer.sendmail(recipient, "Ariento File Send", email_body)
 
 		context = {
 			'recipient': recipient,
@@ -180,7 +186,10 @@ def guest_send(request):
 		return HttpResponse(template.render(context, request))
 
 def login(request):
-	return render(request, 'login.html', {})
+	if 'authorized_user' in request.session:
+		return redirect('/client')
+	else:
+		return render(request, 'login.html', {})
 
 def user_download(request):
 	key = request.POST['key']

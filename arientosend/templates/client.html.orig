@@ -63,7 +63,7 @@
 	{% if inbox_list %}
 		<ul>
 		{% for file in inbox_list %}
-			<li><span>{{ file.file_sent_date|date:"c" }}</span> : {{ file.download_limit|sub:file.download_count }} from {{ file.sender_email }} 
+			<li>{{ file.file_sent_date }}: {{ file.download_limit|sub:file.download_count }} from {{ file.sender_email }} 
 				<form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
 					<input type="hidden" name="key" value="{{ file.file.id }}">
 					<input type="submit" class="btn-sm btn-danger" value="Download">
@@ -81,7 +81,7 @@
 	{% if outbox_list %}
 		<ul>
 		{% for file in outbox_list %}
-			<li><span>{{ file.file_sent_date|date:"c" }}</span> : {{ file.download_limit|sub:file.download_count }} to {{ file.recipient_email }}
+			<li>{{ file.file_sent_date }}: {{ file.download_limit|sub:file.download_count }} to {{ file.recipient_email }}
 				<form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
 					<input type="hidden" name="key" value="{{ file.file.id }}">
 					<input type="submit" class="btn-sm btn-danger" value="Download">
@@ -159,26 +159,5 @@ $( "#tabs" ).tabs();
 <script src="{% static "js/custom.js"%}"></script>
 <script src="{% static "js/constrain.js"%}"></script>
 
-<script>
-window.onload = function() {
-var downlist = $('div[id="fragment-2"] > ul > li > span');
-
-for(var i=0;i<downlist.length;i++)
-{
-        var d = new Date(downlist[i].textContent);
-        downlist[i].firstChild.nodeValue = d.toLocaleFormat();
-}
-var uplist = $('div[id="fragment-3"] > ul > li > span');
-
-for(var i=0;i<uplist.length;i++)
-{
-        var d = new Date(uplist[i].textContent);
-        uplist[i].firstChild.nodeValue = d.toLocaleFormat();
-}
-
-
-};
-
-</script>
 </body>
 </html>
