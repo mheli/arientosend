@@ -47,6 +47,16 @@ def validate_email(email, message='invalid_input'):
 		return HttpResponse(template.render(context, request))	
 	return None
 
+# message_list is a list of FileAccess
+def set_downloadable(message_list):
+	for message in message_list:
+		if message.downloadable is True:
+			try:
+				ArientoFile.objects.get(id=message.file_id)
+			except ObjectDoesNotExist:
+				message.downloadable = False
+	return message_list
+
 #####################
 # Create your views here.
 #####################
@@ -78,11 +88,15 @@ def client(request):
 
 	inbox_list = FileAccess.objects.filter(recipient_email=user.email)
 	outbox_list = FileAccess.objects.filter(sender_email=user.email)
+	
+	inbox_list = set_downloadable(inbox_list)
+	outbox_list = set_downloadable(outbox_list)
+
 	user_email = user.email
         context = {
 		'inbox_list': inbox_list,
 		'outbox_list': outbox_list,
-                'user_email' : user_email,
+        'user_email' : user_email,
 	}
 	template = loader.get_template('client.html')
 	return HttpResponse(template.render(context, request))
