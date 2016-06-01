@@ -45,6 +45,13 @@ def response_login_not_found(request, message='login_not_found'):
 	}
 	return HttpResponse(template.render(context, request))
 
+def response_recipient_not_found(request, message='recipient_not_found'):
+	template = loader.get_template('guest.html')
+	context = {
+		'not_found_type': message,
+	}
+	return HttpResponse(template.render(context, request))
+
 def validate_email(email, message='invalid_input'):
 	if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", email):
 		template = loader.get_template('filenotfound.html')
@@ -225,7 +232,7 @@ def guest_send(request):
 		try:
 			u = User.objects.get(email=recipient)
 		except ObjectDoesNotExist:
-			return render(request, 'guest.html', {})
+			return response_recipient_not_found(request)
 		else:
 			for attached in attachment:
 				af = ArientoFile()

@@ -91,6 +91,10 @@ http://www.tooplate.com/view/2077-modern-town
 			  </div>
 			</div>
 			-->
+			  {% if not_found_type == "recipient_not_found" %}
+			  <div class="alert alert-danger" role="alert">The recipient email is not registered to an Ariento client. Please try again.</div>
+			  {% endif %}
+
 			<div id="send"  class="tab-pane fade in active">
 			     <form method="post" action="guest-send" enctype="multipart/form-data" >{% csrf_token %}
 
