@@ -44,6 +44,9 @@ http://www.tooplate.com/view/2077-modern-town
 					<font color ="4682b4">
 				     	<h1 id="login">Login</h1>
 				 	</font>
+					  {% if not_found_type == "login_not_found" %}
+					  <div class="alert alert-danger" role="alert">Your email or password was incorrect. Please try again.</div>
+					  {% endif %}
 				      <form method="post" action="client"> {% csrf_token %}
 				        <p><input type="email" name="login" value="" placeholder="Username" size="30" required> </p>
 				        <p><input type="password" name="password" value="" placeholder="SafeNet Pin" size="30" required> </p>

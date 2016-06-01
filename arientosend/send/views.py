@@ -38,6 +38,13 @@ def response_file_not_found(request, message='does_not_exist'):
 	}
 	return HttpResponse(template.render(context, request))
 
+def response_login_not_found(request, message='login_not_found'):
+	template = loader.get_template('login.html')
+	context = {
+		'not_found_type': message,
+	}
+	return HttpResponse(template.render(context, request))
+
 def validate_email(email, message='invalid_input'):
 	if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", email):
 		template = loader.get_template('filenotfound.html')
@@ -72,7 +79,7 @@ def client(request):
 		try:
 			user = User.objects.get(email=email)
 		except ObjectDoesNotExist:
-			return render(request, 'login.html', {})
+			return response_login_not_found(request)
 		else:
 			request.session['authorized_user'] = email
 
