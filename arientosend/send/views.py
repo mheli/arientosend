@@ -151,7 +151,7 @@ def client_send(request):
 
 		context = {
 			'recipient': recipient,
-			'num_files': af.id,
+			'num_files': len(attachment),
 		}
 		template = loader.get_template('success.html')
 		return HttpResponse(template.render(context, request))
@@ -238,7 +238,7 @@ def guest_send(request):
 
 			context = {
 				'recipient': recipient,
-				'num_files': attachment,
+				'num_files': len(attachment),
 			}
 			template = loader.get_template('success.html')
 			return HttpResponse(template.render(context, request))
