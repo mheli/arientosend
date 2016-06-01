@@ -93,12 +93,10 @@
 		<ul>
 		{% for file in inbox_list %}
 			<li><span>{{ file.file_sent_date|date:"c" }}</span> : ({{ file.download_limit|sub:file.download_count }} remaining) from {{ file.sender_email }}
-				{% if file.downloadable %}
 				<form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
 					<input type="hidden" name="key" value="{{ file.file.id }}">
 					<input type="submit" class="btn-sm btn-danger" value="Download">
 				</form>
-				{% endif %}
 			</li>
             <br>
 		{% endfor %}
@@ -113,12 +111,10 @@
 		<ul>
 		{% for file in outbox_list %}
 			<li><span>{{ file.file_sent_date|date:"c" }}</span> : ({{ file.download_limit|sub:file.download_count }} remaining) to {{ file.recipient_email }}
-				{% if file.downloadable %}
 				<form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
 					<input type="hidden" name="key" value="{{ file.file.id }}">
 					<input type="submit" class="btn-sm btn-danger" value="Download">
 				</form>
-				{% endif %}
 			</li>
             <br>
 		{% endfor %}

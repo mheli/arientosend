@@ -43,7 +43,6 @@ class FileAccess(models.Model):
     file_expiration_date = models.DateTimeField()
     download_limit = models.PositiveIntegerField(default=10)
     download_count = models.PositiveIntegerField(default=0)
-    downloadable = models.BooleanField(default=True)
 
     # call on model save
     def save(self, *args, **kwargs):
