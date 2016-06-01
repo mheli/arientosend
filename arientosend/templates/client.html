@@ -21,19 +21,48 @@
  
 	  <script src="{% static "js/jquery-1.10.2.js"%}"></script>
   <script src="{% static "js/jquery-ui.js"%}"></script>
- 
+<script type="text/javascript">
+
+
+
+</script> 
+</head>
 	<body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
     <style>
         #home {height: auto;}
+
+
+	#logoutsection{
+		background-color: #337AB7;
+		height: 50px;
+	}
+	#logoutsection form{
+		float: right;
+    		padding-right: 5px;
+    		padding-top: 10px;
+	}
+	#logoutsection form span{
+		padding-right: 5px;
+		color: white;
+	}
+
+
    </style>
 <!-- Home section
 ================================================== -->
 
+<div id="logoutsection">
+	<form method="GET" action="logout" >
+	{% csrf_token %}
+	<span>{{ user_email }}</span><input name="logout" type="submit" value="logout">
+	</form>
+</div>
+
 <section id="home" class="parallax-section homediv">
 
 	<a href="index">
-			<img src="{% static "images/bluewhite_logo_full_w_tag.png"%}" id = "logo" style="width:450px;height:110px;">
+			<img src="{% static "images/bluewhite_logo_full_w_tag.png"%}" id = "logo" style="margin-top:50px;width:450px;height:110px;">
 		</a>
 	<div id="tabs">
   <ul>
@@ -63,7 +92,7 @@
 	{% if inbox_list %}
 		<ul>
 		{% for file in inbox_list %}
-			<li><span>{{ file.file_sent_date|date:"c" }}</span> : {{ file.download_limit|sub:file.download_count }} from {{ file.sender_email }} 
+			<li><span>{{ file.file_sent_date|date:"c" }}</span> : ({{ file.download_limit|sub:file.download_count }} remaining) from {{ file.sender_email }} 
 				<form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
 					<input type="hidden" name="key" value="{{ file.file.id }}">
 					<input type="submit" class="btn-sm btn-danger" value="Download">
@@ -81,7 +110,7 @@
 	{% if outbox_list %}
 		<ul>
 		{% for file in outbox_list %}
-			<li><span>{{ file.file_sent_date|date:"c" }}</span> : {{ file.download_limit|sub:file.download_count }} to {{ file.recipient_email }}
+			<li><span>{{ file.file_sent_date|date:"c" }}</span> : ({{ file.download_limit|sub:file.download_count }} remaining) to {{ file.recipient_email }}
 				<form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
 					<input type="hidden" name="key" value="{{ file.file.id }}">
 					<input type="submit" class="btn-sm btn-danger" value="Download">
@@ -161,20 +190,46 @@ $( "#tabs" ).tabs();
 
 <script>
 window.onload = function() {
-var downlist = $('div[id="fragment-2"] > ul > li > span');
-
-for(var i=0;i<downlist.length;i++)
+function vis()
 {
+	var downlist = $('div[id="fragment-2"] > ul > li > span');
+	for(var i=0;i<downlist.length;i++)
+	{
         var d = new Date(downlist[i].textContent);
         downlist[i].firstChild.nodeValue = d.toLocaleFormat();
-}
-var uplist = $('div[id="fragment-3"] > ul > li > span');
+	}
+	var uplist = $('div[id="fragment-3"] > ul > li > span');
 
-for(var i=0;i<uplist.length;i++)
-{
+	for(var i=0;i<uplist.length;i++)
+	{
         var d = new Date(uplist[i].textContent);
         uplist[i].firstChild.nodeValue = d.toLocaleFormat();
+	}
 }
+vis();
+function cupdate(){
+    var feedback = $.ajax({
+        type: "POST",
+        url: "refclient",
+        data:{
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        async: true
+    }).done(function(data){
+//	console.log(data)
+  	$("#fragment-2").html(data.inbox);
+   	$("#fragment-3").html(data.outbox);
+	vis();
+
+        setTimeout(function(){cupdate();}, 10000);
+    }).fail(function(){
+        setTimeout(function(){cupdate();}, 10000);
+    }).responseText;
+
+    //console.log(feedback.inbox);
+}
+setTimeout(function() { cupdate(); }, 5000);
+
 
 
 };

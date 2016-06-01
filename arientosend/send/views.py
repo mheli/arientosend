@@ -7,12 +7,15 @@ from django.core.files import File
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 
+from django.core import serializers
+from django.template.loader import render_to_string
 from wsgiref.util import FileWrapper
 
 from .models import User, FileAccess
 from .models import File as ArientoFile
 
 import hashlib, uuid
+import json
 from .mailer import emailer
 
 emailer = emailer()
@@ -64,9 +67,11 @@ def client(request):
 
 	inbox_list = FileAccess.objects.filter(recipient_email=user.email)
 	outbox_list = FileAccess.objects.filter(sender_email=user.email)
-	context = {
+	user_email = user.email
+        context = {
 		'inbox_list': inbox_list,
 		'outbox_list': outbox_list,
+                'user_email' : user_email,
 	}
 	template = loader.get_template('client.html')
 	return HttpResponse(template.render(context, request))
@@ -217,6 +222,54 @@ def login(request):
 		return redirect('/client')
 	else:
 		return render(request, 'login.html', {})
+
+def logout(request):
+        if 'authorized_user' in request.session:
+                del request.session['authorized_user']
+                request.session.flush()
+                res = redirect('index.html')
+                res.delete_cookie('csrftoken')
+                return res
+        else:
+            return redirect('index.html')
+
+def refclient(request):
+        if 'authorized_user' in request.session:
+                email = request.session['authorized_user']
+                try:
+                        user = User.objects.get(email=email)
+                except ObjectDoesNotExist:
+                        del request.session['authorized_user']
+                        return render(request, 'login.html', {})
+        else:
+                try:
+                        email = request.POST['login']
+                        # TODO: SafeNet authentication
+                        password = request.POST['password']
+                except KeyError:
+                        return render(request, 'login.html', {})
+
+                try:
+                        user = User.objects.get(email=email)
+                except ObjectDoesNotExist:
+                        return render(request, 'login.html', {})
+                else:
+                        request.session['authorized_user'] = email
+
+        inbox_list = FileAccess.objects.filter(recipient_email=user.email)
+        outbox_list = FileAccess.objects.filter(sender_email=user.email)
+        user_email = user.email
+        context = {
+                'inbox_list': inbox_list,
+                'outbox_list': outbox_list,
+                'user_email' : user_email,
+        }
+
+        data = {}                    
+        data['inbox'] = render_to_string('refclientin.html', context,request=request)
+        data['outbox'] = render_to_string('refclientout.html', context,request=request)
+        pl = json.dumps(data)
+        return HttpResponse(pl, content_type="application/json")
 
 def user_download(request):
 	try:
