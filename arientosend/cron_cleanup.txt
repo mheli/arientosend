@@ -1,2 +1,0 @@
-# run every minute
-* * * * *      ./home/ec2-user/arientosend/arientosend/cleanup.sh
