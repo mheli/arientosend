@@ -1,0 +1,19 @@
+{% load mathfilters %}
+{% load staticfiles %}
+
+{% if outbox_list %}
+                <ul>
+            {% for file in outbox_list %}
+                        <li><span>{{ file.file_sent_date|date:"c" }}</span> : ({{ file.download_limit|sub:file.download_count }} remaining) to {{ file.recipient_email }}
+                                <form method="post" action="user-download" enctype="multipart/form-data">{% csrf_token %}
+                                        <input type="hidden" name="key" value="{{ file.file.id }}">
+                                        <input type="submit" class="btn-sm btn-danger" value="Download">
+                                </form>
+                        </li>
+            <br>
+                {% endfor %}
+                </ul>
+{% else %}
+                <p>There are no files in your outbox.</p>
+{% endif %}
+

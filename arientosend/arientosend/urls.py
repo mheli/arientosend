@@ -24,11 +24,13 @@ urlpatterns = [
     url(r'^index', views.index),
     url(r'^client-send', views.client_send),
     url(r'^client', views.client),
+    url(r'^refclient', views.refclient),
     url(r'^download/(?P<key>\w+)/$', views.download),
     url(r'^download/(?P<key>\w+)/retrieve$', views.retrieve),
     url(r'^guest-send', views.guest_send),
     url(r'^guest', views.guest),
     url(r'^login', views.login),
+    url(r'^logout', views.logout),
     url(r'^user-download', views.user_download),
     url(r'^$', views.index),
 ]
