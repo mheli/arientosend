@@ -14,6 +14,8 @@ from wsgiref.util import FileWrapper
 from .models import User, FileAccess
 from .models import File as ArientoFile
 
+import re
+
 import hashlib, uuid
 import json
 from .mailer import emailer
@@ -35,6 +37,15 @@ def response_file_not_found(request, message='does_not_exist'):
 		'not_found_type': message,
 	}
 	return HttpResponse(template.render(context, request))
+
+def validate_email(email, message='invalid_input'):
+	if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", email):
+		template = loader.get_template('filenotfound.html')
+		context = {
+			'invalid_input': message,
+		}
+		return HttpResponse(template.render(context, request))	
+	return None
 
 #####################
 # Create your views here.
@@ -93,6 +104,12 @@ def client_send(request):
 		password = request.POST['password']
 		message = request.POST['message']
 		attachment = request.FILES.getlist('attachments')
+		
+		#validate emails
+		if validate_email(recipient):
+			return(validate_email(recipient))
+		if validate_email(email):
+			return(validate_email(email)) 
 	except KeyError:
 		return redirect('/client')
 	else:
@@ -105,6 +122,7 @@ def client_send(request):
 
 			fa = FileAccess()
 			fa.file = af
+				
 			fa.recipient_email = recipient
 			fa.sender_email = email
 			try:
@@ -186,6 +204,13 @@ def guest_send(request):
 		recipient = request.POST['email']
 		message = request.POST['message']
 		attachment = request.FILES.getlist('attachments')
+		
+		#validate emails
+		if validate_email(recipient):
+			return(validate_email(recipient))
+		if validate_email(sender):
+			return(validate_email(sender))				
+		
 	except KeyError:
 		return render(request, 'guest.html', {})
 	else:

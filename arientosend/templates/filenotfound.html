@@ -52,6 +52,8 @@ http://www.tooplate.com/view/2077-modern-town
 				 	<p>The file you are looking for could not be found.</p>
 				 	{% elif not_found_type == "incorrect_password" %}
 				 	<p>The file password does not match.</p>
+                    {% elif not_found_type == "invalid_input" %}
+                    <p>The inputs are invalid.</p>
 				 	{% endif %}
 			    </div>
 			</div>
