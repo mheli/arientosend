@@ -196,14 +196,14 @@ function vis()
 	for(var i=0;i<downlist.length;i++)
 	{
         var d = new Date(downlist[i].textContent);
-        downlist[i].firstChild.nodeValue = d.toLocaleFormat();
+        downlist[i].firstChild.nodeValue = d.toTimeString();
 	}
 	var uplist = $('div[id="fragment-3"] > ul > li > span');
 
 	for(var i=0;i<uplist.length;i++)
 	{
         var d = new Date(uplist[i].textContent);
-        uplist[i].firstChild.nodeValue = d.toLocaleFormat();
+        uplist[i].firstChild.nodeValue = d.toTimeString();
 	}
 }
 vis();
