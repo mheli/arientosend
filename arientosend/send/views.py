@@ -65,7 +65,10 @@ def validate_email(email, message='invalid_input'):
 # Create your views here.
 #####################
 def index(request):
-	return render(request, 'index.html', {})
+	if 'authorized_user' in request.session:
+		return redirect('/client')
+	else:
+		return render(request, 'index.html', {})
 
 def client(request):
 	if 'authorized_user' in request.session:
