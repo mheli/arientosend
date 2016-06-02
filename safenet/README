@@ -1,0 +1,9 @@
+to compile java files:
+
+javac -cp ".:BSIDJavaAPI.jar" SafeNet.java Main.java
+
+to run java:
+
+sudo java -cp ".:BSIDJavaAPI.jar" Main
+
+
