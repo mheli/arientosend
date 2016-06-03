@@ -14,6 +14,8 @@ from wsgiref.util import FileWrapper
 from .models import User, FileAccess
 from .models import File as ArientoFile
 
+from .SafeNet import SafeNet
+
 import re
 
 import hashlib, uuid
@@ -79,10 +81,14 @@ def client(request):
 			del request.session['authorized_user']
 			return render(request, 'login.html', {})
 	else:
+                safenet = SafeNet()
 		try:
 			email = request.POST['login']
 			# TODO: SafeNet authentication
 			password = request.POST['password']
+                        if not safenet.authenticate(email, password):
+                            return render(request, 'login.html', {})
+
 		except KeyError:
 			return render(request, 'login.html', {})
 
