@@ -21,9 +21,13 @@ sudo python manage.py collectstatic
 eval `` `ssh-agent -s` ``  
 ssh-add ~/.ssh/github
 
-##Restart nginx server:
+###Restart nginx server:
 sudo service nginx restart
+
+###Script to cleanup expired files every minute
+~/arientosend/arientosend/cleanup.sh
 
 ### Current Ariento users in the database
 test@ariento.com  
 other@ariento.com
+
