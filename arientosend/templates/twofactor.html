@@ -42,13 +42,9 @@ http://www.tooplate.com/view/2077-modern-town
 			<divclass="col-md-12 col-sm-12">
 				<div class="login">
 					<font color ="4682b4">
-				     	<h1 id="login">Login</h1>
+				     	<h1 id="login">Two-Factor</h1>
 				 	</font>
-					  {% if not_found_type == "login_not_found" %}
-					  <div class="alert alert-danger" role="alert">Your email or password was incorrect. Please try again.</div>
-					  {% endif %}
-				      <form method="post" action="two-factor"> {% csrf_token %}
-				        <p><input type="email" name="login" value="" placeholder="Username" size="30" required> </p>
+				      <form method="post" action="client"> {% csrf_token %}
 				        <p><input type="password" name="password" value="" placeholder="SafeNet Pin" size="30" required> </p>
 				        <p><input type="submit" class="btn btn-danger" id="verify" value="Verify"></p>
 				      </form>

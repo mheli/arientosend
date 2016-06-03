@@ -44,12 +44,5 @@ class FileAccess(models.Model):
     download_limit = models.PositiveIntegerField(default=10)
     download_count = models.PositiveIntegerField(default=0)
 
-    # call on model save
-    def save(self, *args, **kwargs):
-        # update timestamps
-        self.file_sent_date = timezone.now()
-        self.file_expiration_date = timezone.now()+timezone.timedelta(days=3)
-        super(FileAccess, self).save(*args, **kwargs)
-
     def __str__(self):
         return self.recipient_email

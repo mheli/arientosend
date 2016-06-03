@@ -17,7 +17,6 @@ from django.conf.urls import include, url
 # from django.contrib import admin
 from send import views
 
-# would be nice to not use .\html, looks bad.
 # don't rearrange the order of the links
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
@@ -31,6 +30,7 @@ urlpatterns = [
     url(r'^guest', views.guest),
     url(r'^login', views.login),
     url(r'^logout', views.logout),
+    url(r'^two-factor', views.two_factor),
     url(r'^user-download', views.user_download),
     url(r'^$', views.index),
 ]
