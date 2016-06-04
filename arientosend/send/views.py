@@ -289,7 +289,7 @@ def guest_send(request):
                 fa.file_expiration_date = timezone.now()+timezone.timedelta(days=3)
                 fa.save()
 
-            email_body = '''An Ariento guest, %s, has sent you a file.\nClick here to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/download/%s/\nMessage:%s''' % (sender, str(af.id), message)
+            email_body = '''An Ariento guest, %s, has sent you a file.\nLog in to download it:http://ec2-54-172-241-8.compute-1.amazonaws.com/login\nMessage:%s''' % (fa.sender_email, message)
             emailer.sendmail(recipient, "Ariento File Send", email_body)
 
             context = {
