@@ -29,5 +29,6 @@ sudo service nginx restart
 
 ### Current Ariento users in the database
 test@ariento.com  
-other@ariento.com
+other@ariento.com  
+pirzadaza@gmail.com
 
